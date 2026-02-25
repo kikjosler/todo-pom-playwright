@@ -28,8 +28,8 @@ cd todo-pom-playwright
 pip install -r requirements.txt
 playwright install
 
-# Запуск всех тестов (медленно + браузер)
+# Запуск всех тестов
 pytest tests/ -v -s
 
-# Headless (быстро)
+# Headless
 pytest tests/ -v -s --headed=false
