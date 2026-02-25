@@ -1,40 +1,51 @@
-name: TodoMVC POM Tests
+name: TodoMVC Tests
 
 on:
   push:
   pull_request:
-  workflow_dispatch:  # Ручной запуск!
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12']
+    
     steps:
     - uses: actions/checkout@v4
     
-    - name: Python 3.12
+    # Cache Python + pip
+    - name: Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
         
-    - name: Install
+    # Cache Playwright
+    - name: 📦 Cache Playwright
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ hashFiles('**/*.txt') }}
+        
+    - name: Install deps
       run: |
-        pip install -r requirements.txt
+        pip install -r requirements.txt --only-binary=all  # ← Только бинарники!
         playwright install --with-deps chromium
         
     - name: Tests + Reports
       run: |
-        mkdir -p reports
+        mkdir -p reports allure-results
         pytest tests/ -n auto -v
-      env:
-        PLAYWRIGHT_HEADLESS: "true"
         
-    - name: Upload HTML Report
+    - name: Upload HTML
       uses: actions/upload-artifact@v4
       with:
         name: pytest-html-report
         path: reports/
         
-    - name: Upload Allure RAW
+    - name: Upload Allure
       uses: actions/upload-artifact@v4
       with:
         name: allure-results-raw
