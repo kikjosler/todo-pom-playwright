@@ -19,7 +19,7 @@ cat > README.md << 'EOF'
 
 ## **Как запустить**
 
-### **Локально (браузер)**
+### **Локально**
 ```bash
 git clone https://github.com/kikjosler/todo-pom-playwright.git
 cd todo-pom-playwright
