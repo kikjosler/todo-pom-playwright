@@ -1,33 +1,27 @@
 import pytest
-import os
 from playwright.sync_api import sync_playwright
-from pages.todo_page import TodoPage
+
+@pytest.fixture(scope="session")
+def playwright():
+    with sync_playwright() as p:
+        yield p
 
 @pytest.fixture(scope="session")
 def browser(playwright):
-    """РЕЖИМЫ BROWSER"""
-    # CI (GitHub) = headless, LOCAL = видимый, DEMO = медленный
-    is_ci = os.getenv('CI', 'false').lower() == 'true'
-    is_demo = os.getenv('DEMO_MODE', 'false').lower() == 'true'
-    
-    browser = playwright.chromium.launch(
-        headless=is_ci, 
-        slow_mo=1500 if is_demo else 500 if not is_ci else 0  # DEMO=медленный
-    )
+    browser = playwright.chromium.launch(headless=False, slow_mo=500)
     yield browser
     browser.close()
 
 @pytest.fixture(scope="function")
 def page(browser):
-    """НОВАЯ ВКЛАДКА для каждого теста"""
     context = browser.new_context()
     page = context.new_page()
+    page.goto("https://todomvc.com/examples/react/dist/")
+    page.wait_for_load_state("networkidle")
     yield page
     context.close()
 
 @pytest.fixture(scope="function")
 def todo_page(page):
-    """ГОТОВАЯ TodoMVC страница (POM объект!)"""
-    page.goto("https://todomvc.com/examples/react/#/")
-    page.wait_for_load_state("networkidle")
+    from pages.todo_page import TodoPage
     return TodoPage(page)

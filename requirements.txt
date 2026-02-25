@@ -1,5 +1,6 @@
 playwright
 pytest
 pytest-html
-pytest-allure-adaptor
+allure-pytest
 pytest-xdist
+
