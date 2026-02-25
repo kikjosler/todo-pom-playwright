@@ -1,7 +1,6 @@
 cat > README.md << 'EOF'
 # TodoMVC UI Tests (Playwright + pytest + GitHub Actions)
 
-[![CI Tests](https://github.com/kikjosler/todo-pom-playwright/actions/workflows/test.yml/badge.svg)](https://github.com/kikjosler/todo-pom-playwright/actions)
 [![Playwright](https://img.shields.io/badge/playwright-1.48-brightgreen.svg)](https://playwright.dev/python/docs/intro)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 
