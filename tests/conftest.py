@@ -9,7 +9,6 @@ def playwright():
 
 @pytest.fixture(scope="session")
 def browser(playwright):
-    # 🔥 ПРАВИЛЬНО! os.getenv вместо playwright.__annotations__
     is_ci = os.getenv('CI', 'false').lower() == 'true'
     headless = is_ci  # CI=True → headless=True | LOCAL=False → headed=False
     slow_mo = 100 if is_ci else 500
