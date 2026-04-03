@@ -15,3 +15,4 @@ def test_filter_completed_todos(todo_page):
     todo_page.complete_todo(0)
     todo_page.filter_completed()
     assert todo_page.page.locator('.todo-list li').count() == 1
+

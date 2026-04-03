@@ -5,7 +5,7 @@ class TodoPage:
         self.page = page
         self.new_todo_input = page.locator('input.new-todo')
         self.todo_list = page.locator('.todo-list li')
-        self.toggle_all_checkbox = page.locator('.toggle-all')  # ✅ Имя с _checkbox
+        self.toggle_all_checkbox = page.locator('.toggle-all')
         self.filter_links = page.locator('.filters a')
         
     def add_todo(self, task: str):
