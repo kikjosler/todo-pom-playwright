@@ -1,4 +1,4 @@
-"""Тесты ВЫПОЛНЕНИЯ задач"""
+"""Тесты выполнения задач"""
 
 def test_complete_single_todo(todo_page):
     """Выполнить 1 задачу"""
@@ -7,7 +7,7 @@ def test_complete_single_todo(todo_page):
     assert todo_page.page.locator('.completed').count() == 1
 
 def test_toggle_all_todos(todo_page):
-    """Отметить ВСЕ галочкой"""
+    """Отметить все галочкой"""
     todo_page.add_multiple_todos(["Задача 1", "Задача 2"])
     todo_page.toggle_all()
     assert todo_page.page.locator('.completed').count() == 2
